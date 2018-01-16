@@ -1,0 +1,74 @@
+{% extends 'rango/base.html' %}
+
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+
+{% block title_block %}
+    {{ categorgy.name }}
+{% endblock %}
+
+{% block body_block %}
+    {% if category %}
+        <h1>{{ category.name }}</h1>  <p>Views:{{ views }}</p>
+        <div>
+            <strong id="like_count">{{ category.likes }}</strong> people likes this category
+            {% if user.is_authenticated %}
+
+                <button id="likes" data-catid="{{category.id}}"
+                    class="btn btn-primary btn-sm" type="button">
+                    Like
+                </button>
+            {% endif %}
+        </div>
+        {% if pages %}
+            <ul>
+            {% for page in pages %}
+                <li><a href="{% url 'rango:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
+                <label style="color:rgb(150, 148, 148); font-size:12px ">Page Views: {{ page.views }}</label>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No pages currently in category.</strong>
+        {% endif %}
+        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a>
+    {% else %}
+        The specified category does not exist!
+    {% endif %}
+    
+        <!--- Search form for searching inside rango categories -->
+    <div>
+        {% if user.is_authenticated %}
+        <hr />
+        <label>Search other external pages if you want to.</label>
+            <form class="form-inline" id="user_form" method="post" action="{% url 'rango:show_category' category.slug %}" >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" size="100" name="query" value="{{ query }}" id="query" />
+                    </div>
+                    <button class="btn btn-primary" types="submit" name="submit" value="Search">Search</button>
+                </form>
+                <div>
+                    {% if result_list %}
+                        <h3>Results</h3>
+                        <!-- Display search results in an ordered list -->
+                        <div class="list-group">
+                        {% for result in result_list %}
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">
+                                    <a href="{{ result.link }}">{{ result.title }}</a>
+                                </h4>
+                                <p class="list-group-item-text">{{ result.summary }}</p>
+                                <button data-catid="{{category.id}}" data-title="{{ result.title }}"
+                                        data-url="{{ result.link }}" 
+                                        class="rango-add btn btn-info btn-sm" type="button">
+                                    Add
+                                </button>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+        {% endif %}
+    </div>
+{% endblock %}

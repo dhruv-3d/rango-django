@@ -1,0 +1,56 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Index
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron">
+    <h1 class="display-3">Rango says...</h1>
+        {% if user.is_authenticated %}
+            <h3>Howdy {{ user.username }}!</h3>
+        {% else %}
+            <p>You visited Home page {{ visits }} times today.</p>
+            <h2>Hey there partner!</h2>
+        {% endif %}
+</div>
+<div class="row_marketing">
+    <div class-"col-lg-6">
+        {% if categories %}
+            <h4>Most Liked Categories</h4>
+            <p>
+            <ul class="list-group">
+                {% for category in categories %}
+                <li class="list-group-item">
+                    <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                    &nbsp;
+                    <span class="badge badge-pill badge-primary">{{ category.views }}</span>
+                </li>
+                {% endfor %}
+           </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        </p>
+    </div>
+    <div class="col-lg-6">
+        {% if pages %}
+            <h4>Most Viewed Pages</h4>
+            <p>
+            <ul class="list-group">
+                {% for page in pages %}
+                <li class="list-group-item">
+                    <a href="{{ page.url }}">{{ page.title }}
+                        &nbsp;
+                        <span class="badge badge-pill badge-primary">{{ page.views }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no pages present.</strong>
+        {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

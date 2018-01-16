@@ -1,0 +1,25 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Adding Category
+{% endblock %}
+
+{% block body_block %}
+<h2 class="form-signin-heading">Add a Category</h2>
+    <div>
+        <form role="form" id="page_form" method="post" action="{% url 'rango:add_category' %}">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}<br/>
+                {{ field }}<br/>
+            {% endfor %}
+            <br/>
+            <button type="submit" name="submit" class="btn btn-primary"> Add Category </button>
+        </form>
+    </div>
+{% endblock %}

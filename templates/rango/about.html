@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    About
+{% endblock %}
+
+{% block body_block %}
+    This about page is created by Dhruv Desai just for sake of "about" section. 
+    <a href="/rango/">Home</a><br />
+    <p>You visited Home page {{ visits }} times today.</p>
+
+    <button class="btn btn-primary" id="about-btn">
+        Click Me - I'm JavaScript on Speed
+    </button>
+    <p>This is a example</p>
+    <p>This text is for JQuery Example</p>
+
+    <div id="msg">Hello - I'm here for a JQuery Example too</div>
+
+    <img class="hehe" src="{% static "images/naruto.png" %}" alt="Seventh Hokage" height="600px" width="800px"/> 
+
+{% endblock %}

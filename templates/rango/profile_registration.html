@@ -1,0 +1,28 @@
+{% extends "rango/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Registration - Step 2
+{% endblock %}
+
+
+{% block body_block %}
+    <h1>Registration - Step 2</h1>
+    <form method="post" action="." enctype="multipart/form-data">
+    <!---
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="submit" value="Submit">
+    -->    
+        <!-- Website -->
+        <label>User Website URL(if you have one)</label>
+        
+        <input type="url" name="website" id="id_website" class ="form-control">
+        <!-- Picture -->
+
+        <label>Upload user profile picture</label>
+        <input type="file" name="picture" id="id_picture" class ="form-control">
+
+        <button class="btn btn-primary" type="submit" value="Submit" />Set Up Profile</button>
+    </form>
+{% endblock %}
